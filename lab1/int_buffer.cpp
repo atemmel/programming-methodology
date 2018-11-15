@@ -62,14 +62,8 @@ int_buffer & int_buffer::operator=(const int_buffer & rhs)
 
 	if(this == &rhs) return *this;
 
-	delete[] m_beg;
-	size_t size = rhs.size();
-	m_beg = new int[size];
-
-	for(size_t i = 0; i < size; i++)
-	{
-		m_beg[i] = rhs.m_beg[i];
-	}
+	int_buffer tmp(rhs);
+	swap(tmp);
 
 	return *this;
 }
