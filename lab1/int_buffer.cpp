@@ -1,6 +1,11 @@
+//#define TEST_ALL
+
+#ifdef TEST_ALL
+#include <iostream>
+#endif
+
 #include "int_buffer.h"
 
-//#define TEST_ALL
 
 int_buffer::int_buffer(size_t size)
 	: m_beg(new int[size]), m_end(m_beg + size)
@@ -29,6 +34,7 @@ int_buffer::int_buffer(const int_buffer & rhs)
 #ifdef TEST_ALL
 	puts("copy constructor");
 #endif
+	//std::copy
 	size_t size = rhs.size();
 
 	for(size_t i = 0; i < size; i++)

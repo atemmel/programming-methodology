@@ -19,6 +19,7 @@ public:
 
 	int_sorted merge(const int_sorted & merge_with) const;
 private:
+	int_sorted sort(const int* begin, const int* end);
 	int_buffer m_buffer;
 };
 

@@ -1,9 +1,22 @@
 #include "int_sorted.h"
 
 int_sorted::int_sorted(const int* source, size_t size)
-	: m_buffer(source, size)
+	: m_buffer(nullptr, 0)
 {	
-	std::sort(m_buffer.begin(), m_buffer.end());
+	if(size == 0)
+	{
+		return;
+	}
+	else if(size == 1)
+	{
+		int_buffer tmpBuff(source, 1);
+		m_buffer = std::move(tmpBuff);
+		return;
+	}
+
+	int_sorted tmp = sort(source, source + size);
+
+	m_buffer = std::move(tmp.m_buffer);
 }
 
 size_t int_sorted::size() const
@@ -100,4 +113,17 @@ int_sorted int_sorted::merge(const int_sorted & merge_with) const
 	}
 
 	return int_sorted(mergedBuffer.begin(), mergedBuffer.size());
+}
+
+
+int_sorted int_sorted::sort(const int* begin, const int* end)
+{
+	if(begin == end) return int_sorted(nullptr, 0);	
+	if(begin == end - 1) return int_sorted(begin, 1);
+
+	ptrdiff_t half = (end - begin) / 2;
+
+	const int* mid = begin + half;
+
+	return sort(begin, mid).merge(sort(mid, end));
 }
