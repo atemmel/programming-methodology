@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <vector>
 
-template<typename T, typename UnaryPredicate>
+template<typename T, typename UnaryPredicate = std::less<> >
 class p_queue
 {
 public:
