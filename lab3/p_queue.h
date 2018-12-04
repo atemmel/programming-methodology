@@ -26,7 +26,7 @@ public:
 			++it;
 		}
 
-		m_elements.insert(it, value);
+		m_elements.insert(it, {value, priority} );
 	}
 
 	size_t size() const
@@ -42,8 +42,11 @@ public:
 private:
 	struct queue_element
 	{
+		queue_element(T value = T(), int priority = 0)
+			: value(value), priority(priority) {}
+		
 		T value;
-		int priority = 0;
+		int priority;
 	};
 
 	std::vector<queue_element> m_elements;
