@@ -4,6 +4,11 @@
 #include <string>
 #include <random>
 
+struct Broker 
+{
+	std::string name;
+	int price;
+};
 
 int main()
 {
@@ -11,15 +16,38 @@ int main()
 	std::mt19937 generator(device());
 	std::uniform_int_distribution<int> dist(15, 30);
 
-	p_queue<std::string, std::greater<>> queue;
+	struct CompBroker
+	{
+		bool operator()(const Broker & lhs, const Broker & rhs) const
+		{
+			return lhs.price > rhs.price;
+		}
+	};
 
-	/*
-	queue.push("Albin", 5);
-	queue.push("James", 2);
-	queue.push("Jens", 3);
-	*/
+	p_queue<Broker, CompBroker> buyers, sellers;
 
-	std::cout << queue.pop() << '\n' << dist(generator) << '\n';
+	constexpr int n = 7;
+
+	for(int i = 0; i < n; i++)
+	{
+		buyers.push({"Erik Pendel", dist(generator)});
+		buyers.push({"Jarl Wallenburg", dist(generator)});
+		buyers.push({"Joakim von Anka", dist(generator)});
+		sellers.push({"Erik Pendel", dist(generator)});
+		sellers.push({"Erik Pendel", dist(generator)});
+		sellers.push({"Joakim von Anka", dist(generator)});
+	}
+
+	while(!buyers.empty() && !sellers.empty())
+	{
+		auto buyer = buyers.pop();
+		auto seller = sellers.pop();
+
+		if(buyer.price <= seller.price)
+		{
+			std::cout << buyer.name << " bought shares worth " << seller.price << " from " << seller.name << '\n';
+		}
+	}
 
 	return 0;
 }

@@ -2,31 +2,33 @@
 #define P_QUEUE_H
 
 #include <functional>
+#include <algorithm>
 #include <vector>
 
-template<typename T, typename comparison = std::less<>>
+template<typename T, typename UnaryPredicate>
 class p_queue
 {
 public:
 	T pop()
 	{
-		T value = m_elements.front().value;
+		T value = m_elements.front();
 		m_elements.erase(m_elements.begin());
 		return value;
 	}
 
-	void push(const T & value, int priority = 0)
+	void push(const T & value)
 	{
 		auto it = m_elements.begin();
-		comparison comp;
 
-		while(it != m_elements.end())
+		UnaryPredicate predicate;
+
+		std::for_each(m_elements.begin(), m_elements.end(), 
+				[predicate, &value, &it](const T & element)
 		{
-			if(comp(it->priority, priority)) break;
-			++it;
-		}
+			if(predicate(value, element)) ++it;
+		});
 
-		m_elements.insert(it, {value, priority} );
+		m_elements.insert(it, value);
 	}
 
 	size_t size() const
@@ -40,16 +42,8 @@ public:
 	}
 
 private:
-	struct queue_element
-	{
-		queue_element(T value = T(), int priority = 0)
-			: value(value), priority(priority) {}
-		
-		T value;
-		int priority;
-	};
+	std::vector<T> m_elements;
 
-	std::vector<queue_element> m_elements;
 };
 
 #endif
