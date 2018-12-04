@@ -35,11 +35,11 @@ int_sorted sort(const int* begin, const int* end)
 void selectionSort(int* begin, int* end)
 {
 
-	for(int* it = begin; it != end; it++)
+	for(int* it = begin; it != end - 1; it++)
 	{
 		int* lowest = it;
 
-		for(int* jt = it; jt != end; jt++)
+		for(int* jt = it + 1; jt != end; jt++)
 		{
 			if(*jt < *lowest) lowest = jt;
 		}
@@ -65,20 +65,19 @@ void compareSorts()
 
 	std::cout << "Merge took: " << diffMerge.count() << " s\n";
 
-	auto beginSelect = std::chrono::high_resolution_clock::now();
-	selectionSort(bigBuffer.begin(), bigBuffer.end());
-	auto endSelect = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double> diffSelect = endSelect - beginSelect;
-
-	std::cout << "Selection took: " << diffSelect.count() << " s\n";
-
-
 	auto beginStd = std::chrono::high_resolution_clock::now();
 	std::sort(stdBuffer.begin(), stdBuffer.end());
 	auto endStd = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> diffStd = endStd - beginStd;
 
 	std::cout << "Standard took: " << diffStd.count() << " s\n";
+
+	auto beginSelect = std::chrono::high_resolution_clock::now();
+	selectionSort(bigBuffer.begin(), bigBuffer.end());
+	auto endSelect = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double> diffSelect = endSelect - beginSelect;
+
+	std::cout << "Selection took: " << diffSelect.count() << " s\n";
 }
 
 void printSorted(const int_sorted & srt)
@@ -109,7 +108,7 @@ int main()
 
 	std::mt19937 mt((std::random_device()()));
 	std::uniform_int_distribution<int> dist(1, 100);
-
+/*
 	for(int* it = buff.begin(); it != buff.end(); it++)
 	{
 		*it = dist(mt);
@@ -147,7 +146,7 @@ int main()
 	puts("Selection sort:");
 	printBuff(buff);
 	selectionSort(buff.begin(), buff.end());
-	printBuff(buff);
+	printBuff(buff);*/
 
 	//chrono test
 

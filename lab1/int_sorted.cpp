@@ -112,7 +112,10 @@ int_sorted int_sorted::merge(const int_sorted & merge_with) const
 		++mergedIter, ++bIter;
 	}
 
-	return int_sorted(mergedBuffer.begin(), mergedBuffer.size());
+	int_sorted sorted(nullptr, 0);
+	sorted.m_buffer = std::move(mergedBuffer);
+
+	return sorted;
 }
 
 
@@ -122,7 +125,6 @@ int_sorted int_sorted::sort(const int* begin, const int* end)
 	if(begin == end - 1) return int_sorted(begin, 1);
 
 	ptrdiff_t half = (end - begin) / 2;
-
 	const int* mid = begin + half;
 
 	return sort(begin, mid).merge(sort(mid, end));
