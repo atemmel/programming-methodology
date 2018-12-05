@@ -18,14 +18,11 @@ public:
 
 	void push(const T & value)
 	{
-		auto it = m_elements.begin();
-
 		UnaryPredicate predicate;
 
-		std::for_each(m_elements.begin(), m_elements.end(), 
-				[predicate, &value, &it](const T & element)
+		auto it = std::find_if(m_elements.begin(), m_elements.end(), [&](const T & input)
 		{
-			if(predicate(value, element)) ++it;
+			return predicate(input, value);
 		});
 
 		m_elements.insert(it, value);
@@ -43,7 +40,6 @@ public:
 
 private:
 	std::vector<T> m_elements;
-
 };
 
 #endif
