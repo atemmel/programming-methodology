@@ -34,7 +34,7 @@ int main()
 		buyers.push({"Jarl Wallenburg", dist(generator)});
 		buyers.push({"Joakim von Anka", dist(generator)});
 		sellers.push({"Erik Pendel", dist(generator)});
-		sellers.push({"Erik Pendel", dist(generator)});
+		sellers.push({"Jarl Wallenburg", dist(generator)});
 		sellers.push({"Joakim von Anka", dist(generator)});
 	}
 
@@ -43,9 +43,10 @@ int main()
 		auto buyer = buyers.pop();
 		auto seller = sellers.pop();
 
-		if(buyer.price <= seller.price)
+		if(buyer.price >= seller.price)
 		{
-			std::cout << buyer.name << " bought shares worth " << seller.price << " from " << seller.name << '\n';
+			std::cout << buyer.name << " bought shares worth " << seller.price << " for the price of "
+				<< buyer.price << " from " << seller.name << '\n';
 		}
 	}
 
