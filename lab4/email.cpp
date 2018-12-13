@@ -42,7 +42,7 @@ bool CompDateWhoSubject::operator()(const Email & lhs, const Email & rhs) const
 
 bool CompSubjectWhoDate::operator()(const Email & lhs, const Email & rhs) const
 {
-	if(lhs.subject < rhs.sender) return true;
+	if(lhs.subject < rhs.subject) return true;
 	else if(lhs.subject == rhs.subject)
 	{
 		if(lhs.sender < rhs.sender) return true;
