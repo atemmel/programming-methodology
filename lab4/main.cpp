@@ -20,33 +20,27 @@ int main()
 	box.push({"Master Chief", "2006-12-01", "Finishing this fight"});
 	box.push({"Palex", "2018-09-04", "Varför har du hjul?"});
 
-	std::for_each(box.begin(), box.end(), [](const Email & email)
+	auto showfn = [](const Email & email)
 	{
 		show(email);
-	});
+	};
+
+	std::for_each(box.begin(), box.end(), showfn);
 
 	std::cout << '\n';
 	box.sortWho();
 
-	std::for_each(box.begin(), box.end(), [](const Email & email)
-	{
-		show(email);
-	});
+	std::for_each(box.begin(), box.end(), showfn);
 
 	std::cout << '\n';
 	box.sortDate();
 
-	std::for_each(box.begin(), box.end(), [](const Email & email)
-	{
-		show(email);
-	});
+	std::for_each(box.begin(), box.end(), showfn);
 
 	std::cout << '\n';
 	box.sortSubject();
 
-	std::for_each(box.begin(), box.end(), [](const Email & email)
-	{
-		show(email);
-	});
+	std::for_each(box.begin(), box.end(), showfn);
+
 	return 0;
 }
