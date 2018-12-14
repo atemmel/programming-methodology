@@ -1,7 +1,7 @@
 #include "mailbox.h"
 
-using Iterator = std::vector<Email>::iterator;
-using ConstIterator = std::vector<Email>::const_iterator;
+using Iterator = MailBox::Iterator;
+using ConstIterator = MailBox::ConstIterator;
 
 MailBox::MailBox(size_t _size)
 	: m_mail(_size)
